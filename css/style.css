@@ -1,0 +1,226 @@
+#main {
+  //width: 391px;
+  //height: 3000px;
+  margin: 0 auto;
+  //background: #000;
+}
+
+#main .top-tab {
+  width: 100%;
+  //height: 43px;
+  height: 11vmin;
+  background: #EDEDED;
+  position: fixed;
+  top: 0;
+}
+
+#main .top-tab .tp {
+  //margin-top: 7px;
+  margin-top: 2.3vmin;
+  //margin-left: 4px;
+  margin-left: 1vmin;
+  //width: 23px;
+  width: 6vmin;
+}
+
+#main .top-tab .zt {
+  //left: 179.5px;
+  left: 46vmin;
+  position: absolute;
+  //top: 10px;
+  top: 3.5vmin;
+  //font-size: 18px;
+  font-size: 4.6vmin;
+}
+
+#main .top-tab .tp2 {
+  //width: 23px;
+  width: 6vmin;
+  margin-top: 2.3vmin;
+  //margin-top: 7px;
+  //margin-right: 10px;
+  margin-right: 2.6vmin;
+}
+
+#main .box1 {
+  //width: 95.8%;
+  width: 95.8vmin;
+  //width: 375px;
+  //height: 129px;
+  height: 35.5vmin;
+  //margin: 51px auto 0;
+  margin: 13.12vmin auto 0;
+  background-color: #2AAE67;
+  border-radius: 8px;
+}
+
+#main .box1 .sfk {
+  //width: 128px;
+  width: 32.8vmin;
+  height: 29.2vmin;
+  //height: 114px;
+  border-radius: 8px;
+  //margin-left: 40px;
+  margin-left: 10.25vmin;
+  background: #2AAE67;
+}
+
+#main .box1 .sfk .sfkimg {
+  //width: 47px;
+  width: 12.05vmin;
+  //margin-top: 13px;
+  margin-top: 3.33vmin;
+}
+
+#main .box1 .sfk .sfkwz {
+  color: #fff;
+  //font-size: 18px;
+  font-size: 4.61vmin;
+  //margin-top: 5px;
+  margin-top: 1.28vmin;
+  font-weight: 350;
+}
+
+#main .box1 .sfk:active {
+  //width: 128px;
+  width: 32.8vmin;
+  height: 29.2vmin;
+  //height: 114px;
+  border-radius: 8px;
+  //margin-left: 40px;
+  margin-left: 10.25vmin;
+  background: #259C5C;
+}
+
+#main .box1 .qb {
+    //width: 128px;
+  width: 32.8vmin;
+  height: 29.2vmin;
+  //height: 114px;
+  border-radius: 8px;
+  //margin-left: 40px;
+  margin-left: 10.25vmin;
+  background: #2AAE67;
+}
+
+#main .box1 .qb .qbimg {
+   //width: 47px;
+  width: 12.05vmin;
+  //margin-top: 13px;
+  margin-top: 3.33vmin;
+}
+
+#main .box1 .qb .qbwz {
+  color: #fff;
+  //font-size: 18px;
+  font-size: 4.61vmin;
+  //margin-top: 5px;
+  margin-top: 1.28vmin;
+  font-weight: 350;
+}
+
+#main .box1 .qb .qbyr {
+  color: #94D6B3;
+  font-family: wx;
+  font-weight: 300;
+  font-size: 4.1vmin;
+  margin-top: 0.76vmin;
+  //font-size: 16px;
+  //margin-top: 3px;
+}
+
+#main .box1 .qb:active {
+  //width: 128px;
+  width: 32.8vmin;
+  height: 29.2vmin;
+  //height: 114px;
+  border-radius: 8px;
+  //margin-left: 40px;
+  margin-left: 10.25vmin;
+  background: #259C5C;
+}
+
+#main .box2 {
+  width: 95.8vmin;
+  //width: 375px;
+ // height: 140px;
+  //margin: 8px auto 0;
+  margin: 2.05vmin auto 0;
+  background-color: #fff;
+  border-radius: 8px;
+}
+
+#main .box2 .box2-1 {
+  //width: 76px;
+  //height: 43px;
+  width: 19.48vmin;
+  height: 11.02vmin;
+}
+
+#main .box2 .box2-1 .box2-1wz {
+  //margin-left: 10px;
+  //font-size: 15px;
+  margin-left: 2.56vmin;
+  font-size: 3.84vmin;
+  font-weight: 350;
+  color: #737373;
+}
+
+#main .box2 .box2-2 {
+  //padding-left: 10px;
+  //padding-right: 6px;
+  //padding-bottom: 8px;
+  padding-left: 2.56vmin;
+  padding-right: 1.53vmin;
+  padding-bottom: 2.05vmin;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+#main .box2 .box2-2 .box2-2-1 {
+  //margin-right: 10px;
+  margin-right: 2.56vmin;
+  border-radius: 8px;
+  //width: 76px;
+ //height: 90px;
+ width: 19.48vmin;
+ height: 23.07vmin;
+}
+
+#main .box2 .box2-2 .box2-2-1kong {
+  //height: 90px;
+  //margin-right: 10px;
+  //width: 76px;
+  margin-right: 2.56vmin;
+  width: 19.48vmin;
+  height: 23.07vmin;
+}
+
+#main .box2 .box2-2 .box2-2-1:active {
+  background: #E5E5E5;
+}
+
+#main .box2 .box2-2 .box2-2-1 .box2-2-1img {
+  //width: 29px;
+  //margin-top: 10px;
+  width: 7.43vmin;
+  height: 7.43vmin; 
+  margin-top: 2.56vmin;
+}
+
+#main .box2 .box2-2 .box2-2-1 .box2-2-1wz {
+  //margin-top: 8px;
+  margin-top: 2.05vmin;
+  font-weight: 380;
+  font-size: 3.33vmin;
+}
+
+#main .box2 .box2-2 .box2-2-1 .box2-2-1wz2 {
+  //font-size: 13px;
+  //margin-top: 7px;
+  font-size: 3.33vmin;
+  margin-top: 1.79vmin;
+  font-weight: 380;
+  color: #FA9D3B;
+}
