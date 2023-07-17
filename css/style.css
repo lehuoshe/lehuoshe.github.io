@@ -7,9 +7,9 @@
 
 #main .top-tab {
   width: 100%;
-  //height: 43px;
-  height: 11vmin;
-  background: #EDEDED;
+  height: 43px;
+  height: 0vmin;
+  background: #21cb9f00;  /* #EDEDED  */
   position: fixed;
   top: 0;
 }
@@ -49,8 +49,8 @@
   //height: 129px;
   height: 35.5vmin;
   //margin: 51px auto 0;
-  margin: 13.12vmin auto 0;
-  background-color: #2AAE67;
+  margin: 1vmin auto 0;   /*距离顶部高度13.12 */
+  background-color: #2AAE67;  /*绿色 */
   border-radius: 8px;
 }
 
@@ -89,7 +89,7 @@
   border-radius: 8px;
   //margin-left: 40px;
   margin-left: 10.25vmin;
-  background: #259C5C;
+  background: #259C5C;   /* #259C5C */
 }
 
 #main .box1 .qb {
@@ -120,7 +120,7 @@
 }
 
 #main .box1 .qb .qbyr {
-  color: #94D6B3;
+  color: #94D6B3;  /*#94D6B3 */
   font-family: wx;
   font-weight: 300;
   font-size: 4.1vmin;
