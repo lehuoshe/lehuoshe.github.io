@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>小程序跳转页</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1">
+    <script>window.onerror = e => {console.error(e)}</script>
+    <link rel="stylesheet" href="https://res.wx.qq.com/open/libs/weui/2.4.1/weui.min.css"></link>
+    <script src="https://res.wx.qq.com/open/js/jweixin-1.6.0.js"></script>
+    <script src="https://res.wx.qq.com/open/js/cloudbase/1.1.0/cloud.js"></script>
+    <script src="https://mat1.gtimg.com/www/asset/lib/jquery/jquery/jquery-1.11.1.min.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/layer/3.5.1/layer.min.js"></script>
+    <script>
+      function docReady(fn) {
+        if (document.readyState === 'complete' || document.readyState === 'interactive') {
+          fn()
+        } else {
+          document.addEventListener('DOMContentLoaded', fn);
+        }
+      }
+      $(function (){
+        var url = window.location.search;
+        if(url.indexOf("?") !== -1){
+          var str = url.substring(1);
+          var ua = navigator.userAgent.toLowerCase()
+          var isWXWork = ua.match(/wxwork/i) == 'wxwork'
+          var isWeixin = !isWXWork && ua.match(/micromessenger/i) == 'micromessenger'
+          var str = str.replaceAll("=","");
+          //console.log(str.substring(0,8));
+          var ids = str.substring(0,8);
+          //console.log(ids);
+          if(str && isWeixin){
+            $.get("https://api.2xb.cn/web_api/zmxcx/get_xcxdata.php?ids=" + ids,(data)=>{
+              data=JSON.parse(JSON.stringify(data));
+              console.log(data.code);
+              if(data.code == 200){
+                const dt = data.data;
+                const btn = $('#launch-btn');
+                btn.attr("username",dt.appid);
+                btn.attr("path",dt.path);
+                layer.msg('点击下面按钮跳转小程序', {icon: 1});
+              }else{
+                $("#bd").hide();
+                layer.msg(data.msg, {icon: 2});
+              }
+            })
+          }
+        }
+      })
+      function openwx(){
+        var containerEl = document.getElementById('desktop-web-container')
+        containerEl.classList.remove('hidden')
+        containerEl.classList.add('full', 'desktop-web-container')
+        layer.confirm('请复制链接到微信粘贴打开', {
+          btn: ['复制'] //按钮
+        }, function(){
+          var url = window.location.href;
+          copyUrl(url);
+          layer.msg('复制成功，正在打开微信', {icon: 1});
+          setTimeout(function (){window.location.href="weixin://"},1000)
+        });
+      }
+      function copyUrl(id) {
+        $("body").after("<input id='copyVal'></input>");
+        var text = id;
+        var input = document.getElementById("copyVal");
+        input.value = text;
+        input.select();
+        input.setSelectionRange(0, input.value.length);
+        document.execCommand("copy");
+        $("#copyVal").remove();
+      }
+      function checkpc(){
+          var system = {}; 
+          var p = navigator.platform;       
+          system.win = p.indexOf("Win") == 0;  
+          system.mac = p.indexOf("Mac") == 0;  
+          system.x11 = (p == "X11") || (p.indexOf("Linux") == 0);     
+          if(system.win||system.mac||system.xll){
+            document.title = '请使用手机打开链接';
+            var objpic = document.getElementById("tipspic");
+            objpic.src = "https://api.2xb.cn/QRCode?text=" + encodeURIComponent(window.location.href);
+            var objtext = document.getElementById("tipstext");
+            objtext.innerHTML = "请使用手机扫码打开";
+          }
+      }
+      docReady(async function() {
+        var ua = navigator.userAgent.toLowerCase()
+        var isWXWork = ua.match(/wxwork/i) == 'wxwork'
+        var isWeixin = !isWXWork && ua.match(/micromessenger/i) == 'micromessenger'
+        if (isWeixin) {
+          checkpc();
+          var containerEl = document.getElementById('wechat-web-container')
+          containerEl.classList.remove('hidden')
+          containerEl.classList.add('full', 'wechat-web-container')
+          var launchBtn = document.getElementById('launch-btn')
+          launchBtn.addEventListener('ready', function (e) {})
+          launchBtn.addEventListener('launch', function (e) {})
+          launchBtn.addEventListener('error', function (e) {})
+          $.ajax({
+				type: 'POST',
+				url: 'https://api.2xb.cn/web_api/zmxcx/get_signature.php',
+				data: {url:window.location.href},
+				dataType: 'json',
+					success: function (data) {
+						console.log(data);
+						if(data.code == 200) {
+							wx.config({
+                            debug: false,
+                            appId: 'wx3f006eecfe60e19d',
+                            timestamp: 0,
+                            nonceStr: 'nonceStr',
+                            signature: data.signature,
+                            jsApiList: ['chooseImage'],
+                            openTagList:['wx-open-launch-weapp'],
+                        })
+					}
+				}
+			})
+        }else{
+          openwx();
+          checkpc();
+        }
+      })
+    </script>
+    <style>
+      .hidden{display:none}
+      .full{position:absolute;top:0;bottom:0;left:0;right:0}
+      .public-web-container p{position:absolute;top:40%}
+      .public-web-container a{position:absolute;bottom:40%}
+      .wechat-web-container p{position:absolute;top:40%}
+      .wechat-web-container wx-open-launch-weapp{position:absolute;bottom:30%;left:0;right:0;display:flex;flex-direction:column;align-items:center}
+      .desktop-web-container p{position:absolute;top:40%}
+      .wrapper {
+			display: flex;
+			flex-direction: column;
+			-webkit-box-align: center;
+			align-items: center;
+			height: 100%;
+		}
+		.wrapper .logo {
+			padding-top: 100px;
+			text-align: center;
+		}
+		.wrapper .logo img {
+			/*width: 256px;*/
+			height: 256px;
+			opacity: 1;
+		}
+		.wrapper .logo p {
+			font-size: 17px;
+			color: #242627;
+			margin: 10px 0 10px 0;
+			text-align: center;
+			-webkit-font-smoothing: antialiased;
+			text-shadow:#FFF 1px 0 0,#FFF 0 1px 0,#FFF -1px 0 0,#FFF 0 -1px 0;
+			-webkit-text-shadow:#FFF 1px 0 0,#FFF 0 1px 0,#FFF -1px 0 0,#FFF 0 -1px 0;
+			-moz-text-shadow:#FFF 1px 0 0,#FFF 0 1px 0,#FFF -1px 0 0,#FFF 0 -1px 0;
+			*filter: Glow(color=#FFF, strength=1);
+		}
+    </style>
+    <!--百度统计-->
+    <script>
+    var _hmt = _hmt || [];
+    (function() {
+        var hm = document.createElement("script");
+        hm.src = "百度统计代码";
+        var s = document.getElementsByTagName("script")[0]; 
+        s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+  </head>
+  <body>
+    <div class="wrapper">
+		<div class="logo">
+			<img src="" id="tipspic">
+			<p id="tipstext"></p>
+		</div>
+	</div>	
+    <div class="page full" id="bd">
+      <div id="wechat-web-container" class="hidden">
+        <wx-open-launch-weapp id="launch-btn" username="gh_979d9ceb7fde" path="pages/index/index?invite=1&userid=&ald_share_src=422b7e9ec108b2aae17505f322a974e2"> <!-- replace -->
+          <template>
+            <button style="width: 200px; height: 45px; text-align: center; font-size: 17px; display: block; margin: 0 auto; padding: 8px 24px; border: none; border-radius: 4px; background-color: #07c160; color:#fff;">打开小程序</button>
+          </template>
+        </wx-open-launch-weapp>
+      </div>
+      <div id="desktop-web-container" class="hidden" style="align-content: center">
+        <button onclick="openwx()" style="position:absolute;bottom:30%;left:0;right:0;display:flex;flex-direction:column;align-items:center;width: 200px; height: 45px; text-align: center; font-size: 17px; display: block; margin: 0 auto; padding: 11px 24px; border: none; border-radius: 4px; background-color: #07c160; color:#fff;">打开微信</button>
+      </div>
+    </div>
+  </body>
+</html>
