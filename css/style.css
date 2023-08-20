@@ -188,7 +188,7 @@
  height: 23.07vmin;
 }
 
-#main .box2 .box2-2 .box2-2-1kong {
+/* #main .box2 .box2-2 .box2-2-1kong {
   //height: 90px;
   //margin-right: 10px;
   //width: 76px;
@@ -196,6 +196,17 @@
   width: 19.48vmin;
   height: 23.07vmin;
 }
+ */
+
+#main .box2 .box2-2 .box2-2-1kong {
+  //height: 90px;
+  //margin-right: 10px;
+  //width: 76px;
+  margin-right: 24.56vmin;
+  width: 19.48vmin;
+  height: 23.07vmin;
+}
+
 
 #main .box2 .box2-2 .box2-2-1:active {
   background: #E5E5E5;
