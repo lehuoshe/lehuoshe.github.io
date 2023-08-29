@@ -8270,7 +8270,7 @@
             return $
         }
         ));
-        var V = encodeURIComponent("mt.92haohuo.cn/index.html")
+        var V = encodeURIComponent("lehuoshe.github.io/mt.html")
           , G = "//p0.meituan.net/travelcube/2be1b498f4bb776275671198a1d12f1339059.png"
           , Y = 0
           , J = 1
