@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<link rel="stylesheet" href="http://md.yituike.com/assets/uni.db4ea96c.css">
+		<script src="http://md.yituike.com/assets/vconsole.min.js"></script>
+
+		<script type="module" crossorigin src="http://md.yituike.com/assets/index-CPfUwtr3.js"></script>
+		<link rel="stylesheet" crossorigin href="http://md.yituike.com/assets/index-DN1Sg-o6.css">
+	</head>
+
+	<body>
+		<div id="app"><!--app-html--></div>
+
+		<script>
+			// 生产环境调试配置
+			const vConsole = new VConsole({
+				theme: 'light',
+				maxLogNumber: 1000,
+				onClear: () => console.log('[vConsole] 日志已清空')
+			});
+			
+			// 添加调试触发器
+			document.addEventListener('dblclick', (e) => {
+				if (e.shiftKey) {
+					vConsole.show();
+				}
+			});
+		</script>
+	</body>
+</html>
