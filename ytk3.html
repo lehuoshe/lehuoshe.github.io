@@ -1,30 +1,104 @@
 <!DOCTYPE html>
-<html lang="en">
-	<head>
-		<link rel="stylesheet" href="http://md.yituike.com/assets/uni.db4ea96c.css">
-		<script src="http://md.yituike.com/assets/vconsole.min.js"></script>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>移动端监控</title>
+    <style>
+        #mainFrame {
+            position: fixed;
+            width: 100%;
+            height: 100vh;
+            border: none;
+        }
 
-		<script type="module" crossorigin src="http://md.yituike.com/assets/index-CPfUwtr3.js"></script>
-		<link rel="stylesheet" crossorigin href="http://md.yituike.com/assets/index-DN1Sg-o6.css">
-	</head>
+        .debug-panel {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            width: 90%;
+            max-height: 70vh;
+            background: rgba(0,0,0,0.9);
+            color: #fff;
+            border-radius: 8px;
+            padding: 15px;
+            display: none;
+            touch-action: none;
+        }
 
-	<body>
-		<div id="app"><!--app-html--></div>
+        .debug-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <iframe id="mainFrame" src="http://md.yituike.com"></iframe>
 
-		<script>
-			// 生产环境调试配置
-			const vConsole = new VConsole({
-				theme: 'light',
-				maxLogNumber: 1000,
-				onClear: () => console.log('[vConsole] 日志已清空')
-			});
-			
-			// 添加调试触发器
-			document.addEventListener('dblclick', (e) => {
-				if (e.shiftKey) {
-					vConsole.show();
-				}
-			});
-		</script>
-	</body>
+    <div class="debug-panel">
+        <div class="debug-header">
+            <h4>网络监控</h4>
+            <button onclick="this.parentElement.parentElement.style.display='none'">关闭</button>
+        </div>
+        <div id="networkLogs"></div>
+    </div>
+
+    <script src="https://unpkg.com/vconsole@latest/dist/vconsole.min.js"></script>
+    <script>
+        // 三指长按触发调试面板
+        let touchStartTime = 0;
+        document.addEventListener('touchstart', (e) => {
+            if (e.touches.length === 3) {
+                touchStartTime = Date.now();
+            }
+        });
+
+        document.addEventListener('touchend', (e) => {
+            if (Date.now() - touchStartTime > 1000) {
+                document.querySelector('.debug-panel').style.display = 'block';
+            }
+            touchStartTime = 0;
+        });
+
+        // 请求监控逻辑
+        const originalFetch = window.fetch;
+        window.fetch = async (...args) => {
+            const start = Date.now();
+            const response = await originalFetch(...args);
+            
+            response.clone().text().then(text => {
+                appendNetworkLog({
+                    url: response.url,
+                    status: response.status,
+                    duration: Date.now() - start,
+                    size: text.length,
+                    method: args[0].method || 'GET'
+                });
+            });
+
+            return response;
+        };
+
+        function appendNetworkLog(log) {
+            const logElement = document.createElement('div');
+            logElement.innerHTML = `
+                <div style="margin:10px 0;padding:10px;background:#333;border-radius:4px;">
+                    <div>${log.method} ${log.status} (${log.duration}ms)</div>
+                    <div style="font-size:0.8em;color:#888;">${log.url}</div>
+                    <div style="font-size:0.8em;">Size: ${(log.size/1024).toFixed(2)}KB</div>
+                </div>
+            `;
+            document.getElementById('networkLogs').appendChild(logElement);
+        }
+
+        // 初始化vConsole
+        new VConsole({
+            theme: 'dark',
+            onReady: () => {
+                console.log('移动端调试面板已激活');
+            }
+        });
+    </script>
+</body>
 </html>
