@@ -44,6 +44,61 @@
 <body>
     <iframe id="mainFrame" src="http://md.yituike.com"></iframe>
 
+    <script>
+        // 在iframe加载完成后注入监控代码
+        document.getElementById('mainFrame').addEventListener('load', function() {
+            const iframeWindow = this.contentWindow;
+
+            // 重写iframe内部的XMLHttpRequest
+            const originalXHR = iframeWindow.XMLHttpRequest;
+            iframeWindow.XMLHttpRequest = function() {
+                const xhr = new originalXHR();
+                xhr.addEventListener('load', function() {
+                    logData({
+                        type: '响应',
+                        url: this.responseURL,
+                        status: this.status,
+                        data: this.responseText.substring(0, 500) + '...' // 限制数据长度
+                    });
+                });
+                return xhr;
+            };
+
+            // 重写iframe内部的Fetch API
+            const originalFetch = iframeWindow.fetch;
+            iframeWindow.fetch = async function(...args) {
+                const response = await originalFetch(...args);
+                response.clone().text().then(data => {
+                    logData({
+                        type: '请求',
+                        url: response.url,
+                        status: response.status,
+                        data: data.substring(0, 500) + '...'
+                    });
+                });
+                return response;
+            };
+        });
+
+        // 增加自动滚动功能
+        function updatePanel() {
+            const container = document.getElementById('dataContainer');
+            container.innerHTML = requests.map((req, i) => 
+                `<div style="margin:10px;padding:10px;background:#fff;border-radius:4px;box-shadow:0 1px 3px rgba(0,0,0,0.1);">
+                    <small>${new Date().toLocaleTimeString()}</small>
+                    <div style="color:${req.type === '请求' ? '#4CAF50' : '#2196F3'};">
+                        <strong>${req.type} ${i+1}</strong>
+                    </div>
+                    <div style="word-break:break-all;margin-top:5px;">
+                        ${req.url}<br>
+                        状态: ${req.status}<br>
+                        数据: ${req.data || '无'}
+                    </div>
+                </div>`
+            ).join('');
+            container.scrollTop = container.scrollHeight;
+        }
+    </script>
     <button id="monitorBtn">显示监控面板</button>
     
     <div id="panel">
