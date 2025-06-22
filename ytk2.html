@@ -20,37 +20,83 @@
 
         // 创建监控面板
         const monitorDiv = document.createElement('div');
-        monitorDiv.style.position = 'fixed';
-        monitorDiv.style.right = '0';
-        monitorDiv.style.bottom = '0';
-        monitorDiv.style.background = 'white';
-        document.body.appendChild(monitorDiv);
-
-        // 拦截fetch请求
-        const originalFetch = window.fetch;
-        // 修改fetch拦截逻辑
-        window.fetch = async (...args) => {
-          const [input] = args;
-          const start = Date.now();
-          const response = await originalFetch(...args);
+        // 修改监控面板样式
+        monitorDiv.style = `
+          position: fixed;
+          bottom: -50%;
+          left: 0;
+          width: 100%;
+          height: 50%;
+          background: rgba(255,255,255,0.95);
+          transition: all 0.3s;
+          box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+          overflow-y: auto;
+          z-index: 9997;
+        `;
         
-          if (typeof input === 'string' && input.includes('memberProfile')) {
-            const clone = response.clone();
-            clone.json().then(data => {
-              // 创建弹窗组件
-              const modal = document.createElement('div');
-              modal.style = 'position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:#fff;padding:20px;z-index:9999;box-shadow:0 0 10px rgba(0,0,0,0.3)';
-              modal.innerHTML = `
-                <h3>会员资料接口响应</h3>
-                <pre>${JSON.stringify(data, null, 2)}</pre>
-                <button onclick="this.parentElement.remove()">关闭</button>
-              `;
-              document.body.appendChild(modal);
-            }).catch(err => {
-              console.error('解析响应失败:', err);
-            });
+        // 添加触发按钮
+        const triggerBtn = document.createElement('div');
+        triggerBtn.style = `
+          position: fixed;
+          right: 15px;
+          bottom: 15px;
+          width: 40px;
+          height: 40px;
+          background: #2196F3;
+          border-radius: 50%;
+          box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+          cursor: pointer;
+          z-index: 9999;
+        `;
+        triggerBtn.innerHTML = '📊';
+
+        triggerBtn.addEventListener('click', () => {
+          monitorDiv.style.bottom = monitorDiv.style.bottom === '0px' ? '-50%' : '0px';
+        });
+
+        document.body.appendChild(triggerBtn);
+
+        // 添加触摸事件
+        let touchStartY = 0;
+        monitorDiv.addEventListener('touchstart', e => {
+          touchStartY = e.touches[0].clientY;
+        });
+
+        monitorDiv.addEventListener('touchmove', e => {
+          const touchY = e.touches[0].clientY;
+          if (touchY - touchStartY > 50) {
+            monitorDiv.style.bottom = '-50%';
           }
-          return response;
+        });
+        monitorDiv.style.zIndex = '9998';  // 确保层级低于弹窗
+        monitorDiv.style.padding = '10px';
+        monitorDiv.style.minWidth = '300px';
+        console.log('监控面板已创建:', monitorDiv);
+        
+        // 在fetch拦截器开头添加请求日志
+        window.fetch = async (...args) => {
+        console.log('[请求拦截] 开始处理:', args[0]);
+        const [input] = args;
+        const start = Date.now();
+        const response = await originalFetch(...args);
+        
+        if (typeof input === 'string' && input.includes('memberProfile')) {
+          const clone = response.clone();
+          clone.json().then(data => {
+            // 创建弹窗组件
+            const modal = document.createElement('div');
+            modal.style = 'position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:#fff;padding:20px;z-index:9999;box-shadow:0 0 10px rgba(0,0,0,0.3)';
+            modal.innerHTML = `
+              <h3>会员资料接口响应</h3>
+              <pre>${JSON.stringify(data, null, 2)}</pre>
+              <button onclick="this.parentElement.remove()">关闭</button>
+            `;
+            document.body.appendChild(modal);
+          }).catch(err => {
+            console.error('解析响应失败:', err);
+          });
+        }
+        return response;
         };
         
         // 修改XMLHttpRequest拦截逻辑
@@ -69,6 +115,22 @@
           }
           originalOpen.apply(this, arguments);
         };
+        
+        // 在弹窗创建时添加边界检查
+        modal.style.maxHeight = '80vh';
+        modal.style.overflow = 'auto';
+        console.log('弹窗已创建:', modal);
+        
+        // 添加全局错误捕获
+        window.addEventListener('error', function(e) {
+          console.error('全局错误:', e.message, 'at', e.filename, 'line', e.lineno);
+        });
+        
+        // 添加DOM加载完成检查
+        document.addEventListener('DOMContentLoaded', function() {
+          console.log('DOM已加载完成');
+          // 确保在此事件中执行监控初始化
+        });
     </script>
 </body>
 </html>
