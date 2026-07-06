@@ -1,0 +1,22 @@
+{
+	"spider":"./lh.jar",
+	"lives":[
+		{"name":"直播","type":1,"url":"http://127.0.0.1:9978/proxy?do=iptv&c=all"}
+	],
+	"sites":[
+		{"key":"快手","name":"快手","type":3,"api":"csp_Kuaishou","searchable":1,"quickSearch":1,"changeable":1},
+		{"key":"哔哩","name":"哔哩","type":3,"api":"csp_Bili","searchable":1,"quickSearch":1,"changeable":1,"playerType":1},
+		{"key":"IPTV直播","name":"IPTV直播","type":3,"api":"csp_Iptv","searchable":1,"quickSearch":0,"changeable":1,"playerType":2},
+		{"key":"非凡资源","name":"非凡资源","type":1,"api":"http://api.ffzyapi.com/api.php/provide/vod/","searchable":1,"quickSearch":1,"filterable":1},
+		{"key":"魔都资源","name":"魔都资源","type":1,"api":"http://128.241.254.211/api.php/provide/vod/","searchable":1,"quickSearch":1,"filterable":1},
+		{"key":"极速资源","name":"极速资源","type":1,"api":"https://jszyapi.com/api.php/provide/vod/","searchable":1,"quickSearch":1,"filterable":1}
+	],
+	"search":[
+		{"key":"kuaishou","name":"快手","api":"csp_Kuaishou"},
+		{"key":"bili","name":"哔哩","api":"csp_Bili"},
+		{"key":"iptv","name":"IPTV直播","api":"csp_Iptv"},
+		{"key":"非凡资源","name":"非凡资源","type":1,"api":"http://api.ffzyapi.com/api.php/provide/vod/"},
+		{"key":"魔都资源","name":"魔都资源","type":1,"api":"http://128.241.254.211/api.php/provide/vod/"},
+		{"key":"极速资源","name":"极速资源","type":1,"api":"https://jszyapi.com/api.php/provide/vod/"}
+	]
+}
