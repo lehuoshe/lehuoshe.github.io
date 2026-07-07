@@ -1,5 +1,5 @@
 {
-	"spider":"./kuaishou1.jar",
+	"spider":"./lh.jar",
 	"lives":[
 		{"name":"直播","type":1,"url":"http://127.0.0.1:9978/proxy?do=iptv&c=all"}
 	],
@@ -26,15 +26,15 @@
 			"key":"魔都资源",
 			"name":"魔都资源",
 			"type":1,
-			"api":"https://caiji.moduapi.com/api.php/provide/vod/",
+			"api":"https://www.mdzyapi.com/api.php/provide/vod/",
 			"searchable":1,
 			"quickSearch":1,
 			"filterable":1,
 			"categories":[
 				"动作片","喜剧片","爱情片","科幻片","恐怖片","剧情片","战争片","惊悚片",
-				"家庭片","古装片","历史片","悬疑片","犯罪片","灾难片","记录片","短剧",
-				"国产剧","香港剧","韩国剧","欧美剧",
-				"大陆综艺","港台综艺","欧美综艺",
+				"家庭片","古装片","历史片","悬疑片","犯罪片","灾难片","记录片","短片",
+				"国产剧","香港剧","韩国剧","欧美剧","台湾剧","日本剧","海外剧","泰国剧","短剧",
+				"大陆综艺","港台综艺","日韩综艺","欧美综艺",
 				"国产动漫","日韩动漫","欧美动漫","港台动漫"
 			]
 		},
@@ -60,7 +60,7 @@
 		{"key":"bili","name":"哔哩","api":"csp_Bili"},
 		{"key":"iptv","name":"IPTV直播","api":"csp_Iptv"},
 		{"key":"非凡资源","name":"非凡资源","type":1,"api":"https://api.ffzyapi.com/api.php/provide/vod/"},
-		{"key":"魔都资源","name":"魔都资源","type":1,"api":"https://caiji.moduapi.com/api.php/provide/vod/"},
+		{"key":"魔都资源","name":"魔都资源","type":1,"api":"https://www.mdzyapi.com/api.php/provide/vod/"},
 		{"key":"极速资源","name":"极速资源","type":1,"api":"https://jszyapi.com/api.php/provide/vod/"}
 	]
 }
